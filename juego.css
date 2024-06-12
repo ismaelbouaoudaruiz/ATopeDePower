@@ -1,0 +1,75 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 800px;
+    text-align: center;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    width: 50px;
+    margin-bottom: 10px;
+}
+
+.stats, .special-skills {
+    margin-bottom: 20px;
+}
+
+.stat {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.special-skills h3 {
+    margin-bottom: 10px;
+}
+
+.activities {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.activities th, .activities td {
+    border: 1px solid #fff;
+    padding: 10px;
+    text-align: left;
+}
+
+.activities th {
+    background-color: #555;
+}
+
+.activities td button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.activities td button:hover {
+    background-color: #0056b3;
+}
