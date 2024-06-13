@@ -1,4 +1,4 @@
-const stats = {
+const stats = JSON.parse(localStorage.getItem('stats')) || {
     level: 1,
     experience: 0,
     vitality: 0,
@@ -78,7 +78,82 @@ const activityDescriptions = {
 
 let activitiesDoneToday = {};
 let lastActivityDate = {};
-let specialSkills = [];
+let specialSkills = JSON.parse(localStorage.getItem('specialSkills')) || [];
+let skillProgress = JSON.parse(localStorage.getItem('skillProgress')) || {};
+
+const specialSkillsConditions = [
+    { name: 'Luchador', description: 'Mejora en un 20% tu capacidad para defenderte en una situación donde las palabras no son la solución, aumenta tu energia, fuerza, agilidad, inteligencia y confianza en un 2%.', condition: { martialArts: 100, healthyFood: 40 }, effect: { energy: 0.02, strength: 0.02, agility: 0.02, intelligence: 0.02, confidence: 0.02 } },
+    { name: 'Chef Experto', description: 'Aumenta tu habilidad para cocinar comidas saludables en un 30% vitalidad aumenta un 2%.', condition: { healthyFood: 50 }, effect: { vitality: 0.02 } },
+    { name: 'Maratonista', description: 'Incrementa tu Agilidad y energía en un 5%.', condition: { running: 200 }, effect: { agility: 0.05, energy: 0.05 } },
+    { name: 'Bibliotecario', description: 'Mejora tu capacidad de retener información en un 10%.', condition: { reading: 85 }, effect: { intelligence: 0.1 } },
+    { name: 'Dormilón Profesional', description: 'Aumenta tu vitalidad y energía en un 10% después de dormir bien.', condition: { sleeping: 20 }, effect: { vitality: 0.1, energy: 0.1 } },
+    { name: 'Meditador Zen', description: 'Incrementa tu concentración y reduce el estrés en un 12%, aumenta la confianza en un 20% y suerte en un 5%.', condition: { meditating: 60 }, effect: { intelligence: 0.12, confidence: 0.2, luck: 0.05 } },
+    { name: 'Levantador de Pesas', description: 'Aumenta tu fuerza en un 10%.', condition: { weightlifting: 100 }, effect: { strength: 0.1 } },
+    { name: 'Caminante de Larga Distancia', description: 'Mejora tu energia 2% y confianza 1%.', condition: { walking: 80 }, effect: { energy: 0.02, confidence: 0.01 } },
+    { name: 'Flexibilidad de Goma', description: 'Aumenta tu agilidad y reduce las lesiones en un 15%.', condition: { sedentary: 50, healthyFood: 10 }, effect: { agility: 0.15 } },
+    { name: 'Saludable al Máximo', description: 'Mejora tu bienestar general en un 10% ,poco a poco vas notando cambios, aumenta confianza, suerte en un 15%, energia y vitalidad en un 10% .', condition: { lowCalorieDiet: 28 }, effect: { confidence: 0.15, luck: 0.15, energy: 0.1, vitality: 0.1 } },
+    { name: 'Planificador', description: 'Mejora tu capacidad para organizar y gestionar el tiempo en un 5%.', condition: { organizeWeek: 30 }, effect: { intelligence: 0.05 } },
+    { name: 'Amigo Fiel', description: 'Incrementa tu confianza y felicidad en un 25%.', condition: { seeFriends: 50 }, effect: { confidence: 0.25 } },
+    { name: 'Maestro del Meme', description: 'Mejora tu habilidad para conectar con los demás en un 20%.', condition: { sendMeme: 100 }, effect: { confidence: 0.2 } },
+    { name: 'Solucionador Global', description: 'Incrementa tu inteligencia y creatividad en un 30%.', condition: { globalSolutions: 40 }, effect: { intelligence: 0.3 } },
+    { name: 'Mentalista', description: 'Aumenta tu capacidad de resolver problemas en un 30%.', condition: { mentalExercise: 50 }, effect: { intelligence: 0.3 } },
+    { name: 'Programador Maestro', description: 'Mejora tu habilidad para codificar y resolver problemas técnicos en un 40%.', condition: { programming: 100 }, effect: { intelligence: 0.4 } },
+    { name: 'Escalador', description: 'Mejora tu fuerza y resistencia en un 20%.', condition: { climbStairs: 100 }, effect: { strength: 0.2, energy: 0.2 } },
+    { name: 'Hidratado', description: 'Incrementa tu vitalidad y energía en un 25%.', condition: { infusions: 200 }, effect: { vitality: 0.25, energy: 0.25 } },
+    { name: 'Guerrero Contra el Sedentarismo', description: 'Reduce los efectos negativos del sedentarismo en un 30%.', condition: { sedentary: 60 }, effect: { vitality: 0.3, energy: 0.3 } },
+    { name: 'Maestro del Balance', description: 'Mejora tu capacidad para balancear diferentes aspectos de tu vida en un 30%.', condition: { healthyFood: 100, walking: 100 }, effect: { confidence: 0.3 } },
+    { name: 'Multitasker', description: 'Incrementa tu capacidad para realizar múltiples tareas a la vez en un 25%.', condition: { organizeWeek: 50 }, effect: { intelligence: 0.25 } },
+    { name: 'Resiliente', description: 'Mejora tu capacidad para recuperarte de fracasos en un 35%.', condition: { running: 30 }, effect: { confidence: 0.35 } },
+    { name: 'Motivador', description: 'Aumenta tu habilidad para inspirar a otros en un 20%.', condition: { sendMeme: 50 }, effect: { confidence: 0.2 } },
+    { name: 'Socializador', description: 'Incrementa tu confianza y habilidades sociales en un 30%.', condition: { meetNewPerson: 30 }, effect: { confidence: 0.3 } },
+    { name: 'Fortaleza Mental', description: 'Mejora tu resistencia mental en un 40%.', condition: { mentalExercise: 60 }, effect: { intelligence: 0.4 } },
+    { name: 'Levantador de Peso Extremo', description: 'Incrementa tu fuerza máxima en un 40%.', condition: { weightlifting: 10000 }, effect: { strength: 0.4 } },
+    { name: 'Cocinero Saludable', description: 'Mejora tu capacidad para preparar comidas nutritivas en un 35%.', condition: { cooking: 100 }, effect: { vitality: 0.35 } },
+    { name: 'Ejecutor de Tareas', description: 'Incrementa tu eficiencia en la realización de tareas en un 25%.', condition: { organizeWeek: 200 }, effect: { intelligence: 0.25 } },
+    { name: 'Aficionado a la Naturaleza', description: 'Aumenta tu bienestar general y reduce el estrés en un 30%.', condition: { walking: 200 }, effect: { vitality: 0.3, energy: 0.3 } },
+    { name: 'Atleta Completo', description: 'Incrementa tu fuerza, agilidad y resistencia en un 35%.', condition: { running: 500 }, effect: { strength: 0.35, agility: 0.35, energy: 0.35 } },
+    { name: 'Maestro en Relaciones', description: 'Mejora tu habilidad para mantener relaciones saludables en un 30%.', condition: { talkFamily: 50 }, effect: { confidence: 0.3 } },
+    { name: 'Escapista', description: 'Mejora tu capacidad para evadir problemas y relajarte en un 25%.', condition: { sleeping: 50 }, effect: { vitality: 0.25, energy: 0.25 } },
+    { name: 'Curioso por Naturaleza', description: 'Incrementa tu inteligencia y deseo de aprender en un 30%.', condition: { learnSkill: 20 }, effect: { intelligence: 0.3 } },
+    { name: 'Optimista', description: 'Mejora tu actitud positiva y reduce el estrés en un 25%.', condition: { mentalExercise: 100 }, effect: { intelligence: 0.25 } },
+    { name: 'Visionario', description: 'Incrementa tu capacidad para planificar y visualizar el futuro en un 35%.', condition: { organizeWeek: 52 }, effect: { intelligence: 0.35 } },
+    { name: 'Hacker del Hábitat', description: 'Mejora tu capacidad para adaptar y mejorar tu entorno en un 30%.', condition: { healthyFood: 30 }, effect: { vitality: 0.3 } },
+    { name: 'Maestro del Ritmo', description: 'Incrementa tu coordinación y sentido del ritmo en un 25%.', condition: { walking: 50 }, effect: { agility: 0.25 } },
+    { name: 'Negociador Experto', description: 'Mejora tu capacidad para negociar y resolver conflictos en un 30%.', condition: { meetNewPerson: 50 }, effect: { confidence: 0.3 } },
+    { name: 'Aventurero', description: 'Incrementa tu deseo de explorar y experimentar cosas nuevas en un 30%.', condition: { running: 100 }, effect: { energy: 0.3 } },
+    { name: 'Innovador', description: 'Mejora tu creatividad y capacidad para innovar en un 35%.', condition: { globalSolutions: 50 }, effect: { intelligence: 0.35 } },
+    { name: 'Concentrado', description: 'Incrementa tu capacidad de enfoque y atención en un 30%.', condition: { meditating: 100 }, effect: { intelligence: 0.3 } },
+    { name: 'Mente Aguda', description: 'Mejora tu agilidad mental y capacidad de pensamiento rápido en un 25%.', condition: { mentalExercise: 100 }, effect: { intelligence: 0.25 } },
+    { name: 'Ejemplo a Seguir', description: 'Incrementa tu capacidad para inspirar y guiar a otros en un 35%.', condition: { meetNewPerson: 50 }, effect: { confidence: 0.35 } },
+    { name: 'Adaptador', description: 'Mejora tu capacidad para adaptarte a cambios y nuevas situaciones en un 30%.', condition: { organizeWeek: 50 }, effect: { intelligence: 0.3 } },
+    { name: 'Fortaleza Física', description: 'Incrementa tu capacidad de resistencia física en un 30%.', condition: { running: 200 }, effect: { strength: 0.3 } },
+    { name: 'Guardia de la Salud', description: 'Mejora tu conocimiento y prácticas de salud en un 25%.', condition: { healthyFood: 50 }, effect: { vitality: 0.25 } },
+    { name: 'Defensor del Bienestar', description: 'Incrementa tu capacidad para mantener un estado de bienestar en un 30%.', condition: { meditating: 100 }, effect: { vitality: 0.3, energy: 0.3 } },
+    { name: 'Explorador del Conocimiento', description: 'Mejora tu deseo y capacidad de aprender en un 35%.', condition: { learnSkill: 50 }, effect: { intelligence: 0.35 } }
+];
+
+let activityCounts = JSON.parse(localStorage.getItem('activityCounts')) || {};
+
+function incrementActivity(activity) {
+    if (!activityCounts[activity]) {
+        activityCounts[activity] = 0;
+    }
+    activityCounts[activity]++;
+    document.getElementById('count-' + activity).textContent = activityCounts[activity];
+    localStorage.setItem('activityCounts', JSON.stringify(activityCounts));
+
+    performActivity(activity);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    for (const activity in activityCounts) {
+        if (document.getElementById('count-' + activity)) {
+            document.getElementById('count-' + activity).textContent = activityCounts[activity];
+        }
+    }
+    updateStatsDisplay();
+    updateSpecialSkillsDisplay();
+});
 
 function updateStatsDisplay() {
     for (const stat in stats) {
@@ -90,13 +165,14 @@ function updateStatsDisplay() {
 
 function updateSpecialSkillsDisplay() {
     const summaryList = document.getElementById('skills-summary');
-    const detailDiv = document.getElementById('skills-detail');
+    const detailDiv = document.getElementById('special-skills-content');
 
     summaryList.innerHTML = '';
     detailDiv.innerHTML = '';
 
     if (specialSkills.length === 0) {
         summaryList.innerHTML = 'Ninguna habilidad especial aún';
+        detailDiv.innerHTML = 'No se han adquirido habilidades especiales aún.';
     } else {
         specialSkills.forEach(skill => {
             const listItem = document.createElement('li');
@@ -117,11 +193,6 @@ function performActivity(activity) {
         activitiesDoneToday[today] = new Set();
     }
 
-    if (activitiesDoneToday[today].has(activity)) {
-        alert("Ya has realizado esta actividad hoy.");
-        return;
-    }
-
     activitiesDoneToday[today].add(activity);
     lastActivityDate[activity] = today;
 
@@ -135,7 +206,9 @@ function performActivity(activity) {
     }
 
     checkLevelUp();
+    checkSpecialSkills(activity);
     updateStatsDisplay();
+    localStorage.setItem('stats', JSON.stringify(stats));
 }
 
 function checkLevelUp() {
@@ -145,21 +218,39 @@ function checkLevelUp() {
         stats.level++;
         expNeeded = 20 * Math.pow(1.2, stats.level - 1);
 
-        // Apply pending stats
         for (const stat in pendingStats) {
             stats[stat] += pendingStats[stat];
-            pendingStats[stat] = 0; // Reset pending stats after applying
+            pendingStats[stat] = 0;
         }
-
-        // Add the special skill "Resistencia Mental"
-        specialSkills.push({
-            name: 'Resistencia Mental',
-            description: 'Esta habilidad fruto de un gran esfuerzo mental seguido para conseguir valores, principios y objetivos por parte del jugador le permiten tener un 15% más de resistencia a darse por vencido ante las adversidades del día a día. Esta habilidad se pierde si en 15 días no se ha realizado una tarea como gran objetivo.'
-        });
 
         updateSpecialSkillsDisplay();
         alert("¡Has subido de nivel!");
     }
+    localStorage.setItem('stats', JSON.stringify(stats));
+}
+
+function checkSpecialSkills(activity) {
+    specialSkillsConditions.forEach(skill => {
+        const condition = skill.condition;
+        if (condition[activity] !== undefined) {
+            skillProgress[skill.name] = (skillProgress[skill.name] || 0) + 1;
+            localStorage.setItem('skillProgress', JSON.stringify(skillProgress));
+            if (skillProgress[skill.name] >= condition[activity]) {
+                specialSkills.push({
+                    name: skill.name,
+                    description: skill.description
+                });
+                for (const stat in skill.effect) {
+                    stats[stat] += skill.effect[stat];
+                }
+                updateSpecialSkillsDisplay();
+                alert(`¡Has obtenido la habilidad especial: ${skill.name}!`);
+                skillProgress[skill.name] = 0;
+                localStorage.setItem('skillProgress', JSON.stringify(skillProgress));
+                localStorage.setItem('specialSkills', JSON.stringify(specialSkills));
+            }
+        }
+    });
 }
 
 function decrementDailyStats() {
@@ -172,13 +263,14 @@ function decrementDailyStats() {
             const effect = baseEffects[activity];
             for (const stat in effect) {
                 if (stat !== "experience") {
-                    stats[stat] += dailyDecrementEffects[activity][stat] || 0; // Apply negative effect
+                    stats[stat] += dailyDecrementEffects[activity][stat] || 0;
                     if (stats[stat] < 0) stats[stat] = 0;
                 }
             }
         }
     }
     updateStatsDisplay();
+    localStorage.setItem('stats', JSON.stringify(stats));
 }
 
 function showDescription(activity) {
