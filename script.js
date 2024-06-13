@@ -49,31 +49,31 @@ const baseEffects = {
 };
 
 const activityDescriptions = {
-    running: 'Correr es una actividad física que mejora tu vitalidad y energía. También incrementa tu fuerza y agilidad.',
-    reading: 'Leer un libro mejora tu inteligencia y confianza. También proporciona energía.',
-    sleeping: 'Dormir bien es crucial para mejorar tu vitalidad y energía.',
-    meditating: 'Meditar aumenta tu inteligencia, energía y confianza.',
-    cooking: 'Cocinar una comida saludable mejora tu vitalidad, energía e inteligencia.',
-    weightlifting: 'Hacer pesas incrementa tu fuerza y confianza.',
-    walking: 'Hacer una caminata mejora tu vitalidad, energía y agilidad.',
-    martialArts: 'Las artes marciales incrementan tu vitalidad, energía, fuerza, agilidad, inteligencia y confianza.',
-    sedentary: 'El sedentarismo reduce tu vitalidad, energía, fuerza, agilidad y confianza.',
-    climbStairs: 'Subir escaleras mejora tu vitalidad, energía, fuerza, agilidad y suerte.',
-    soda: 'Beber sodas reduce tu vitalidad y suerte, pero aumenta tu energía.',
-    healthyFood: 'Comer saludable incrementa tu vitalidad, energía, inteligencia y confianza.',
-    lowCalorieDiet: 'Una dieta de pocas calorías mejora tu vitalidad, energía y agilidad, pero reduce tu fuerza.',
-    highCalorieDiet: 'Una dieta de muchas calorías incrementa tu vitalidad, energía y fuerza, pero reduce tu agilidad.',
-    infusions: 'Tomar infusiones mejora tu vitalidad, energía, inteligencia y confianza.',
-    pastries: 'La bollería reduce tu vitalidad, agilidad y confianza, pero incrementa tu energía.',
-    learnSkill: 'Aprender una nueva habilidad mejora tu inteligencia y confianza, y proporciona energía.',
-    mentalExercise: 'Hacer ejercicios mentales mejora tu inteligencia y confianza, y proporciona energía.',
-    programming: 'Programar incrementa tu inteligencia, suerte y confianza.',
-    globalSolutions: 'Pensar en soluciones mundiales mejora tu inteligencia, suerte y confianza.',
-    organizeWeek: 'Organizar la semana incrementa tu inteligencia, energía y confianza.',
-    meetNewPerson: 'Conocer a alguien nuevo mejora tu suerte y confianza.',
-    seeFriends: 'Ver a tus amigos mejora tu vitalidad, energía, suerte y confianza.',
-    sendMeme: 'Mandar un meme mejora tu suerte y confianza.',
-    talkFamily: 'Hablar con tu familia mejora tu vitalidad, energía, suerte y confianza.'
+    running: 'Muy buena actividad física para fortalecer el cuerpo y la mente. Correr te enseña a no rendirte. ¡Nada motiva más a correr que tener detrás a la policía!',
+    reading: 'Leer un libro es una excelente forma de estimular tu mente y aprender cosas nuevas. Si lees un manga mejor que mejor, pero bueno, no hemos venido a juzgar, hemos venido a jugar.',
+    sleeping: 'Dormir bien es crucial para tu salud. Asegúrate de descansar lo suficiente cada noche. ¡Lleva cuidado con los vladimir jajaja!',
+    meditating: 'Meditar calma la mente y mejora la concentración. Encuentra un momento de paz en tu día. ¡Namasté!',
+    cooking: 'Cocinar una comida saludable es beneficioso para tu cuerpo y mente. ¡Disfruta de una buena comida casera y si es la de la mama mejor que mejor, bon appétit!',
+    weightlifting: 'Levantar pesas fortalece tus músculos y aumenta tu resistencia. ¡A tope Simon!',
+    walking: 'Caminar es una forma sencilla de mantenerte activo y mejorar tu salud. ¡Un pasito más es un pasito menos!',
+    martialArts: 'Las artes marciales son excelentes para desarrollar disciplina y fuerza. ¡Topuria se me queda corto!',
+    sedentary: 'El sedentarismo puede tener efectos negativos en tu salud. Intenta moverte más durante el día, en resumen ¡Levántate puto gordo y muévete!',
+    climbStairs: 'Subir escaleras es una forma efectiva de ejercicio que puedes hacer en cualquier lugar. ¡Hazlo y siente cómo queman esos músculos!',
+    soda: 'Las sodas pueden ser refrescantes, pero su consumo excesivo no es saludable. Bebe con moderación y opta por agua si puedes..... AGUA AGUA AGUA AGUA.',
+    healthyFood: 'Comer alimentos saludables mejora tu bienestar general. ¡Opta por frutas y verduras, tu cuerpo te lo agradecerá!',
+    lowCalorieDiet: 'Una dieta baja en calorías puede ayudarte a mantener un peso saludable. ¡Hazlo de forma equilibrada y no te saltes comidas!',
+    highCalorieDiet: 'Una dieta alta en calorías puede ser necesaria para ganar energía, pero elige alimentos nutritivos. ¡No todo es hamburguesas y pizza!',
+    infusions: 'Las infusiones son una forma relajante de hidratarse. ¡Prueba diferentes sabores y disfruta de un momento de calma!',
+    pastries: 'La bollería puede ser deliciosa, pero no la comas en exceso. ¡Disfrútala con moderación y saborea cada bocado! Esto es lo que diría una IA, lo que yo te digo es que dejes de comer tanta mierda y te pongas a darle más duro que a tu ex en tus sueños.',
+    learnSkill: 'Aprender una nueva habilidad es emocionante y gratificante. ¡Nunca dejes de aprender y desafía tus límites!',
+    mentalExercise: 'Los ejercicios mentales mantienen tu mente aguda. ¡Resuelve un rompecabezas hoy y mantén tu cerebro en forma!',
+    programming: 'Programar desarrolla habilidades técnicas valiosas. ¡Prueba a crear algo nuevo y déjate llevar por el código!',
+    globalSolutions: 'Pensar en soluciones globales puede ser inspirador. Reflexiona sobre cómo puedes contribuir al mundo, ¡tú puedes hacer la diferencia!',
+    organizeWeek: 'Organizar tu semana te ayuda a mantenerte enfocado. Planifica y prepárate para el éxito, ¡ser organizado nunca fue tan divertido!',
+    meetNewPerson: 'Conocer a alguien nuevo puede abrirte a nuevas experiencias. ¡Sé valiente y socializa, el mundo está lleno de personas interesantes! Aquí os lo digo enserio, hay que ser menos vergonzoso y disfrutar con la gente, fijo que en algún momento encuentras a alguien igual de loco que tú.',
+    seeFriends: 'Ver a tus amigos mejora tu estado de ánimo y bienestar. Yo sé que es bien difícil quedar con tus colegas, pero bueno, nunca dejes de intentarlo.',
+    sendMeme: 'Mandar un meme puede alegrar el día de alguien. ¡Si también mandas un nude eso ya no es cosa mía, aquí no juzgamos jajaja!',
+    talkFamily: 'Hablar con tu familia fortalece los lazos y proporciona apoyo emocional. ¡Conéctate con ellos, nunca sabes cuándo un "te quiero" puede hacer el día!'
 };
 
 let activitiesDoneToday = {};
@@ -135,7 +135,6 @@ function performActivity(activity) {
     }
 
     checkLevelUp();
-
     updateStatsDisplay();
 }
 
@@ -159,7 +158,6 @@ function checkLevelUp() {
         });
 
         updateSpecialSkillsDisplay();
-
         alert("¡Has subido de nivel!");
     }
 }
