@@ -1,8 +1,12 @@
-title: Minijuego de Estadísticas
-description: >
-  Un minijuego para gestionar y mejorar estadísticas personales.
-baseurl: ""
-url: "https://{your-username}.github.io/{your-repo}"
+# _config.yml
+title: Your Site Title
+email: your-email@example.com
+description: >- # this means to ignore newlines until "baseurl:"
+  Your site description
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://your-username.github.io" # your GitHub Pages URL
+
+# Build settings
 markdown: kramdown
 theme: minima
 plugins:
