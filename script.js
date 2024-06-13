@@ -20,6 +20,16 @@ const pendingStats = {
     confidence: 0
 };
 
+const dailyDecrementEffects = {
+    running: { vitality: -0.1, energy: -0.1, strength: -0.05, agility: -0.1, luck: -0.05, confidence: -0.1 },
+    reading: { energy: -0.05, intelligence: -0.1, confidence: -0.05 },
+    sleeping: { vitality: -0.1, energy: -0.1 },
+    meditating: { intelligence: -0.1, energy: -0.05, confidence: -0.05 },
+    cooking: { vitality: -0.1, energy: -0.1, intelligence: -0.05 },
+    weightlifting: { strength: -0.1, confidence: -0.05 },
+    walking: { vitality: -0.1, energy: -0.1, agility: -0.1 }
+};
+
 const baseEffects = {
     running: { experience: 2, vitality: 0.2, energy: 0.2, strength: 0.05, agility: 0.3, intelligence: 0, luck: 0.05, confidence: 0.1 },
     reading: { experience: 1.5, energy: 0.1, intelligence: 0.3, confidence: 0.1 },
@@ -76,10 +86,10 @@ const activityDescriptions = {
     talkFamily: 'Hablar con tu familia fortalece los lazos y proporciona apoyo emocional. ¡Conéctate con ellos, nunca sabes cuándo un "te quiero" puede hacer el día!'
 };
 
-let activitiesDoneToday = {};
-let lastActivityDate = {};
+let activitiesDoneToday = JSON.parse(localStorage.getItem('activitiesDoneToday')) || {};
+let lastActivityDate = JSON.parse(localStorage.getItem('lastActivityDate')) || {};
 let specialSkills = JSON.parse(localStorage.getItem('specialSkills')) || [];
-let skillProgress = JSON.parse(localStorage.getItem('skillProgress')) || {};
+let skillProgress = JSON.parse(localStorage.getItem('skillProgress')) || {}; // To track progress for special skills
 
 const specialSkillsConditions = [
     { name: 'Luchador', description: 'Mejora en un 20% tu capacidad para defenderte en una situación donde las palabras no son la solución, aumenta tu energia, fuerza, agilidad, inteligencia y confianza en un 2%.', condition: { martialArts: 100, healthyFood: 40 }, effect: { energy: 0.02, strength: 0.02, agility: 0.02, intelligence: 0.02, confidence: 0.02 } },
@@ -132,29 +142,6 @@ const specialSkillsConditions = [
     { name: 'Explorador del Conocimiento', description: 'Mejora tu deseo y capacidad de aprender en un 35%.', condition: { learnSkill: 50 }, effect: { intelligence: 0.35 } }
 ];
 
-let activityCounts = JSON.parse(localStorage.getItem('activityCounts')) || {};
-
-function incrementActivity(activity) {
-    if (!activityCounts[activity]) {
-        activityCounts[activity] = 0;
-    }
-    activityCounts[activity]++;
-    document.getElementById('count-' + activity).textContent = activityCounts[activity];
-    localStorage.setItem('activityCounts', JSON.stringify(activityCounts));
-
-    performActivity(activity);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    for (const activity in activityCounts) {
-        if (document.getElementById('count-' + activity)) {
-            document.getElementById('count-' + activity).textContent = activityCounts[activity];
-        }
-    }
-    updateStatsDisplay();
-    updateSpecialSkillsDisplay();
-});
-
 function updateStatsDisplay() {
     for (const stat in stats) {
         if (stat !== "experience") {
@@ -172,7 +159,6 @@ function updateSpecialSkillsDisplay() {
 
     if (specialSkills.length === 0) {
         summaryList.innerHTML = 'Ninguna habilidad especial aún';
-        detailDiv.innerHTML = 'No se han adquirido habilidades especiales aún.';
     } else {
         specialSkills.forEach(skill => {
             const listItem = document.createElement('li');
@@ -208,7 +194,6 @@ function performActivity(activity) {
     checkLevelUp();
     checkSpecialSkills(activity);
     updateStatsDisplay();
-    localStorage.setItem('stats', JSON.stringify(stats));
 }
 
 function checkLevelUp() {
@@ -226,7 +211,7 @@ function checkLevelUp() {
         updateSpecialSkillsDisplay();
         alert("¡Has subido de nivel!");
     }
-    localStorage.setItem('stats', JSON.stringify(stats));
+    saveData();
 }
 
 function checkSpecialSkills(activity) {
@@ -234,7 +219,6 @@ function checkSpecialSkills(activity) {
         const condition = skill.condition;
         if (condition[activity] !== undefined) {
             skillProgress[skill.name] = (skillProgress[skill.name] || 0) + 1;
-            localStorage.setItem('skillProgress', JSON.stringify(skillProgress));
             if (skillProgress[skill.name] >= condition[activity]) {
                 specialSkills.push({
                     name: skill.name,
@@ -246,11 +230,10 @@ function checkSpecialSkills(activity) {
                 updateSpecialSkillsDisplay();
                 alert(`¡Has obtenido la habilidad especial: ${skill.name}!`);
                 skillProgress[skill.name] = 0;
-                localStorage.setItem('skillProgress', JSON.stringify(skillProgress));
-                localStorage.setItem('specialSkills', JSON.stringify(specialSkills));
             }
         }
     });
+    saveData();
 }
 
 function decrementDailyStats() {
@@ -270,7 +253,6 @@ function decrementDailyStats() {
         }
     }
     updateStatsDisplay();
-    localStorage.setItem('stats', JSON.stringify(stats));
 }
 
 function showDescription(activity) {
@@ -278,6 +260,40 @@ function showDescription(activity) {
     document.getElementById('description-content').textContent = description;
 }
 
-updateStatsDisplay();
-updateSpecialSkillsDisplay();
-setInterval(decrementDailyStats, 86400000); // Decrease daily stats every 24 hours
+function incrementActivity(activity) {
+    const today = new Date().toISOString().split('T')[0];
+    if (!activitiesDoneToday[today]) {
+        activitiesDoneToday[today] = {};
+    }
+    if (!activitiesDoneToday[today][activity]) {
+        activitiesDoneToday[today][activity] = 0;
+    }
+    activitiesDoneToday[today][activity]++;
+    document.getElementById(`count-${activity}`).textContent = activitiesDoneToday[today][activity];
+    performActivity(activity);
+}
+
+function saveData() {
+    localStorage.setItem('stats', JSON.stringify(stats));
+    localStorage.setItem('activitiesDoneToday', JSON.stringify(activitiesDoneToday));
+    localStorage.setItem('lastActivityDate', JSON.stringify(lastActivityDate));
+    localStorage.setItem('specialSkills', JSON.stringify(specialSkills));
+    localStorage.setItem('skillProgress', JSON.stringify(skillProgress));
+}
+
+function loadData() {
+    updateStatsDisplay();
+    updateSpecialSkillsDisplay();
+    const today = new Date().toISOString().split('T')[0];
+    if (activitiesDoneToday[today]) {
+        for (const activity in activitiesDoneToday[today]) {
+            document.getElementById(`count-${activity}`).textContent = activitiesDoneToday[today][activity];
+        }
+    }
+}
+
+window.addEventListener('beforeunload', saveData);
+window.addEventListener('load', () => {
+    loadData();
+    setInterval(decrementDailyStats, 86400000);
+});
