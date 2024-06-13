@@ -30,13 +30,11 @@
                 <ul id="skills-summary">Ninguna habilidad especial aún</ul>
             </div>
         </div>
+        <div class="description">
+            <h3>Descripción</h3>
+            <div id="description-content">Selecciona una actividad para ver la descripción.</div>
+        </div>
         <main>
-            <div class="special-skills-detail">
-                <h3>Detalles de Habilidades Especiales</h3>
-                <div id="skills-detail">
-                    <!-- Aquí se añadirán las habilidades especiales -->
-                </div>
-            </div>
             <table class="activities">
                 <thead>
                     <tr>
@@ -46,103 +44,103 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Correr</td>
+                        <td onclick="showDescription('running')">Correr</td>
                         <td><button onclick="performActivity('running')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Leer un libro</td>
+                        <td onclick="showDescription('reading')">Leer un libro</td>
                         <td><button onclick="performActivity('reading')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Dormir bien</td>
+                        <td onclick="showDescription('sleeping')">Dormir bien</td>
                         <td><button onclick="performActivity('sleeping')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Meditar</td>
+                        <td onclick="showDescription('meditating')">Meditar</td>
                         <td><button onclick="performActivity('meditating')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Cocinar una comida saludable</td>
+                        <td onclick="showDescription('cooking')">Cocinar una comida saludable</td>
                         <td><button onclick="performActivity('cooking')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Hacer pesas</td>
+                        <td onclick="showDescription('weightlifting')">Hacer pesas</td>
                         <td><button onclick="performActivity('weightlifting')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Hacer una caminata</td>
+                        <td onclick="showDescription('walking')">Hacer una caminata</td>
                         <td><button onclick="performActivity('walking')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Artes marciales</td>
+                        <td onclick="showDescription('martialArts')">Artes marciales</td>
                         <td><button onclick="performActivity('martialArts')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Sedentarismo</td>
+                        <td onclick="showDescription('sedentary')">Sedentarismo</td>
                         <td><button onclick="performActivity('sedentary')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Subir escaleras</td>
+                        <td onclick="showDescription('climbStairs')">Subir escaleras</td>
                         <td><button onclick="performActivity('climbStairs')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Sodas</td>
+                        <td onclick="showDescription('soda')">Sodas</td>
                         <td><button onclick="performActivity('soda')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Comida saludable</td>
+                        <td onclick="showDescription('healthyFood')">Comida saludable</td>
                         <td><button onclick="performActivity('healthyFood')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Dieta pocas calorías</td>
+                        <td onclick="showDescription('lowCalorieDiet')">Dieta pocas calorías</td>
                         <td><button onclick="performActivity('lowCalorieDiet')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Dieta muchas calorías</td>
+                        <td onclick="showDescription('highCalorieDiet')">Dieta muchas calorías</td>
                         <td><button onclick="performActivity('highCalorieDiet')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Infusiones</td>
+                        <td onclick="showDescription('infusions')">Infusiones</td>
                         <td><button onclick="performActivity('infusions')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Bollería</td>
+                        <td onclick="showDescription('pastries')">Bollería</td>
                         <td><button onclick="performActivity('pastries')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Aprender una nueva habilidad</td>
+                        <td onclick="showDescription('learnSkill')">Aprender una nueva habilidad</td>
                         <td><button onclick="performActivity('learnSkill')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Ejercicios mentales</td>
+                        <td onclick="showDescription('mentalExercise')">Ejercicios mentales</td>
                         <td><button onclick="performActivity('mentalExercise')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Programar</td>
+                        <td onclick="showDescription('programming')">Programar</td>
                         <td><button onclick="performActivity('programming')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Pensar en soluciones mundiales</td>
+                        <td onclick="showDescription('globalSolutions')">Pensar en soluciones mundiales</td>
                         <td><button onclick="performActivity('globalSolutions')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Organizar la semana</td>
+                        <td onclick="showDescription('organizeWeek')">Organizar la semana</td>
                         <td><button onclick="performActivity('organizeWeek')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Conocer a alguien nuevo</td>
+                        <td onclick="showDescription('meetNewPerson')">Conocer a alguien nuevo</td>
                         <td><button onclick="performActivity('meetNewPerson')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Ver a tus amigos</td>
+                        <td onclick="showDescription('seeFriends')">Ver a tus amigos</td>
                         <td><button onclick="performActivity('seeFriends')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Mandar 1 meme</td>
+                        <td onclick="showDescription('sendMeme')">Mandar 1 meme</td>
                         <td><button onclick="performActivity('sendMeme')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Hablar con tu familia</td>
+                        <td onclick="showDescription('talkFamily')">Hablar con tu familia</td>
                         <td><button onclick="performActivity('talkFamily')">Hecho</button></td>
                     </tr>
                 </tbody>
