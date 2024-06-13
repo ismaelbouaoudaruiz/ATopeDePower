@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,32 +7,35 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <img src="image.png" alt="Logo" class="logo">
-    </header>
     <div class="container">
-        <div class="stats">
-            <h2>Estadísticas Principales</h2>
-            <ul>
-                <li>Nivel: <span id="level">1</span></li>
-                <li>Vitalidad: <span id="vitality">0</span></li>
-                <li>Energía: <span id="energy">0</span></li>
-                <li>Fuerza: <span id="strength">0</span></li>
-                <li>Agilidad: <span id="agility">0</span></li>
-                <li>Inteligencia: <span id="intelligence">0</span></li>
-                <li>Suerte: <span id="luck">0</span></li>
-                <li>Confianza: <span id="confidence">0</span></li>
-            </ul>
+        <div class="sidebar">
+            <header>
+                <img src="https://img.icons8.com/ios-filled/50/000000/muscle.png" alt="Logo" class="logo">
+            </header>
+            <div class="stats">
+                <h3>Estadísticas Principales</h3>
+                <table>
+                    <tr><td>Nivel</td><td id="level">1</td></tr>
+                    <tr><td>Vitalidad</td><td id="vitality">0</td></tr>
+                    <tr><td>Energía</td><td id="energy">0</td></tr>
+                    <tr><td>Fuerza</td><td id="strength">0</td></tr>
+                    <tr><td>Agilidad</td><td id="agility">0</td></tr>
+                    <tr><td>Inteligencia</td><td id="intelligence">0</td></tr>
+                    <tr><td>Suerte</td><td id="luck">0</td></tr>
+                    <tr><td>Confianza</td><td id="confidence">0</td></tr>
+                </table>
+            </div>
+            <div class="special-skills-summary">
+                <h3>Habilidades Obtenidas</h3>
+                <ul id="skills-summary">Ninguna habilidad especial aún</ul>
+            </div>
         </div>
-        <div class="skills">
-            <h2>Habilidades Obtenidas</h2>
-            <ul id="skills-summary">
-                Ninguna habilidad especial aún
-            </ul>
+        <div class="description">
+            <h3>Descripción</h3>
+            <div id="description-content">Selecciona una actividad para ver la descripción.</div>
         </div>
-        <div class="activities">
-            <h2>Actividades</h2>
-            <table>
+        <main>
+            <table class="activities">
                 <thead>
                     <tr>
                         <th>Actividad</th>
@@ -41,112 +44,108 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Correr</td>
+                        <td onclick="showDescription('running')">Correr</td>
                         <td><button onclick="performActivity('running')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Leer un libro</td>
+                        <td onclick="showDescription('reading')">Leer un libro</td>
                         <td><button onclick="performActivity('reading')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Dormir bien</td>
+                        <td onclick="showDescription('sleeping')">Dormir bien</td>
                         <td><button onclick="performActivity('sleeping')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Meditar</td>
+                        <td onclick="showDescription('meditating')">Meditar</td>
                         <td><button onclick="performActivity('meditating')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Cocinar una comida saludable</td>
+                        <td onclick="showDescription('cooking')">Cocinar una comida saludable</td>
                         <td><button onclick="performActivity('cooking')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Hacer pesas</td>
+                        <td onclick="showDescription('weightlifting')">Hacer pesas</td>
                         <td><button onclick="performActivity('weightlifting')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Hacer una caminata</td>
+                        <td onclick="showDescription('walking')">Hacer una caminata</td>
                         <td><button onclick="performActivity('walking')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Artes marciales</td>
+                        <td onclick="showDescription('martialArts')">Artes marciales</td>
                         <td><button onclick="performActivity('martialArts')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Sedentarismo</td>
+                        <td onclick="showDescription('sedentary')">Sedentarismo</td>
                         <td><button onclick="performActivity('sedentary')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Subir escaleras</td>
+                        <td onclick="showDescription('climbStairs')">Subir escaleras</td>
                         <td><button onclick="performActivity('climbStairs')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Sodas</td>
+                        <td onclick="showDescription('soda')">Sodas</td>
                         <td><button onclick="performActivity('soda')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Comida saludable</td>
+                        <td onclick="showDescription('healthyFood')">Comida saludable</td>
                         <td><button onclick="performActivity('healthyFood')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Dieta pocas calorías</td>
+                        <td onclick="showDescription('lowCalorieDiet')">Dieta pocas calorías</td>
                         <td><button onclick="performActivity('lowCalorieDiet')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Dieta muchas calorías</td>
+                        <td onclick="showDescription('highCalorieDiet')">Dieta muchas calorías</td>
                         <td><button onclick="performActivity('highCalorieDiet')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Infusiones</td>
+                        <td onclick="showDescription('infusions')">Infusiones</td>
                         <td><button onclick="performActivity('infusions')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Bollería</td>
+                        <td onclick="showDescription('pastries')">Bollería</td>
                         <td><button onclick="performActivity('pastries')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Aprender una nueva habilidad</td>
+                        <td onclick="showDescription('learnSkill')">Aprender una nueva habilidad</td>
                         <td><button onclick="performActivity('learnSkill')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Ejercicios mentales</td>
+                        <td onclick="showDescription('mentalExercise')">Ejercicios mentales</td>
                         <td><button onclick="performActivity('mentalExercise')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Programar</td>
+                        <td onclick="showDescription('programming')">Programar</td>
                         <td><button onclick="performActivity('programming')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Pensar en soluciones mundiales</td>
+                        <td onclick="showDescription('globalSolutions')">Pensar en soluciones mundiales</td>
                         <td><button onclick="performActivity('globalSolutions')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Organizar la semana</td>
+                        <td onclick="showDescription('organizeWeek')">Organizar la semana</td>
                         <td><button onclick="performActivity('organizeWeek')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Conocer a alguien nuevo</td>
+                        <td onclick="showDescription('meetNewPerson')">Conocer a alguien nuevo</td>
                         <td><button onclick="performActivity('meetNewPerson')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Ver a tus amigos</td>
+                        <td onclick="showDescription('seeFriends')">Ver a tus amigos</td>
                         <td><button onclick="performActivity('seeFriends')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Mandar un meme</td>
+                        <td onclick="showDescription('sendMeme')">Mandar 1 meme</td>
                         <td><button onclick="performActivity('sendMeme')">Hecho</button></td>
                     </tr>
                     <tr>
-                        <td>Hablar con tu familia</td>
+                        <td onclick="showDescription('talkFamily')">Hablar con tu familia</td>
                         <td><button onclick="performActivity('talkFamily')">Hecho</button></td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-        <div class="description">
-            <h2>Descripción</h2>
-            <p id="description-content">Selecciona una actividad para ver la descripción.</p>
-        </div>
+        </main>
     </div>
     <script src="script.js"></script>
 </body>
