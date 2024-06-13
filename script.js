@@ -48,6 +48,34 @@ const baseEffects = {
     talkFamily: { experience: 1, vitality: 0.1, energy: 0.1, luck: 0.1, confidence: 0.2 }
 };
 
+const activityDescriptions = {
+    running: 'Correr es una actividad física que mejora tu vitalidad y energía. También incrementa tu fuerza y agilidad.',
+    reading: 'Leer un libro mejora tu inteligencia y confianza. También proporciona energía.',
+    sleeping: 'Dormir bien es crucial para mejorar tu vitalidad y energía.',
+    meditating: 'Meditar aumenta tu inteligencia, energía y confianza.',
+    cooking: 'Cocinar una comida saludable mejora tu vitalidad, energía e inteligencia.',
+    weightlifting: 'Hacer pesas incrementa tu fuerza y confianza.',
+    walking: 'Hacer una caminata mejora tu vitalidad, energía y agilidad.',
+    martialArts: 'Las artes marciales incrementan tu vitalidad, energía, fuerza, agilidad, inteligencia y confianza.',
+    sedentary: 'El sedentarismo reduce tu vitalidad, energía, fuerza, agilidad y confianza.',
+    climbStairs: 'Subir escaleras mejora tu vitalidad, energía, fuerza, agilidad y suerte.',
+    soda: 'Beber sodas reduce tu vitalidad y suerte, pero aumenta tu energía.',
+    healthyFood: 'Comer saludable incrementa tu vitalidad, energía, inteligencia y confianza.',
+    lowCalorieDiet: 'Una dieta de pocas calorías mejora tu vitalidad, energía y agilidad, pero reduce tu fuerza.',
+    highCalorieDiet: 'Una dieta de muchas calorías incrementa tu vitalidad, energía y fuerza, pero reduce tu agilidad.',
+    infusions: 'Tomar infusiones mejora tu vitalidad, energía, inteligencia y confianza.',
+    pastries: 'La bollería reduce tu vitalidad, agilidad y confianza, pero incrementa tu energía.',
+    learnSkill: 'Aprender una nueva habilidad mejora tu inteligencia y confianza, y proporciona energía.',
+    mentalExercise: 'Hacer ejercicios mentales mejora tu inteligencia y confianza, y proporciona energía.',
+    programming: 'Programar incrementa tu inteligencia, suerte y confianza.',
+    globalSolutions: 'Pensar en soluciones mundiales mejora tu inteligencia, suerte y confianza.',
+    organizeWeek: 'Organizar la semana incrementa tu inteligencia, energía y confianza.',
+    meetNewPerson: 'Conocer a alguien nuevo mejora tu suerte y confianza.',
+    seeFriends: 'Ver a tus amigos mejora tu vitalidad, energía, suerte y confianza.',
+    sendMeme: 'Mandar un meme mejora tu suerte y confianza.',
+    talkFamily: 'Hablar con tu familia mejora tu vitalidad, energía, suerte y confianza.'
+};
+
 let activitiesDoneToday = {};
 let lastActivityDate = {};
 let specialSkills = [];
@@ -153,6 +181,11 @@ function decrementDailyStats() {
         }
     }
     updateStatsDisplay();
+}
+
+function showDescription(activity) {
+    const description = activityDescriptions[activity] || 'Descripción no disponible.';
+    document.getElementById('description-content').textContent = description;
 }
 
 updateStatsDisplay();
