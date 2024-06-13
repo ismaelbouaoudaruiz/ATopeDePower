@@ -1,42 +1,51 @@
 const stats = {
-    level: 28,
-    vitality: 50,
-    energy: 50,
-    strength: 10,
-    agility: 10,
-    intelligence: 10,
-    luck: 10,
-    confidence: 10
+    level: 1,
+    experience: 0,
+    vitality: 0,
+    energy: 0,
+    strength: 0,
+    agility: 0,
+    intelligence: 0,
+    luck: 0,
+    confidence: 0
 };
 
-const effects = {
-    running: { vitality: 0.1, energy: 0.2, strength: 0.05, agility: 0.1 },
-    reading: { energy: 0.1, intelligence: 0.2, confidence: 0.051 },
-    sleeping: { vitality: 0.2, energy: 0.2 },
-    meditating: { intelligence: 0.2, energy: 0.1, confidence: 0.1 },
-    cooking: { vitality: 0.3, energy: 0.2, intelligence: 0.1 },
-    weightlifting: { strength: 0.2, confidence: 0.2 },
-    walking: { vitality: 0.3, energy: 0.2, agility: 0.1 }
+const pendingStats = {
+    vitality: 0,
+    energy: 0,
+    strength: 0,
+    agility: 0,
+    intelligence: 0,
+    luck: 0,
+    confidence: 0
 };
 
-const dailyDecrementEffects = {
-    running: { vitality: -0.1, energy: -0.2, strength: -0.05, agility: -0.1 },
-    reading: { energy: -0.1, intelligence: -0.2, confidence: -0.051 },
-    sleeping: { vitality: -0.2, energy: -0.2 },
-    meditating: { intelligence: -0.2, energy: -0.1, confidence: -0.1 },
-    cooking: { vitality: -0.3, energy: -0.2, intelligence: -0.1 },
-    weightlifting: { strength: -0.2, confidence: -0.2 },
-    walking: { vitality: -0.3, energy: -0.2, agility: -0.1 }
-};
-
-let activityCounts = {
-    running: 0,
-    reading: 0,
-    sleeping: 0,
-    meditating: 0,
-    cooking: 0,
-    weightlifting: 0,
-    walking: 0
+const baseEffects = {
+    running: { experience: 2, vitality: 0.2, energy: 0.2, strength: 0.05, agility: 0.3, intelligence: 0, luck: 0.05, confidence: 0.1 },
+    reading: { experience: 1.5, energy: 0.1, intelligence: 0.3, confidence: 0.1 },
+    sleeping: { experience: 1, vitality: 0.3, energy: 0.3 },
+    meditating: { experience: 1.2, intelligence: 0.3, energy: 0.2, confidence: 0.2 },
+    cooking: { experience: 1.1, vitality: 0.4, energy: 0.3, intelligence: 0.1 },
+    weightlifting: { experience: 2, strength: 0.3, confidence: 0.2 },
+    walking: { experience: 1.8, vitality: 0.3, energy: 0.2, agility: 0.2 },
+    martialArts: { experience: 2, vitality: 0.2, energy: 0.1, strength: 0.2, agility: 0.2, intelligence: 0.1, confidence: 0.2 },
+    sedentary: { experience: 0, vitality: -0.2, energy: -0.1, strength: -0.1, agility: -0.1, confidence: -0.1 },
+    climbStairs: { experience: 2, vitality: 0.2, energy: 0.2, strength: 0.1, agility: 0.2, luck: 0.05, confidence: 0.1 },
+    soda: { experience: 0, vitality: -0.1, energy: 0.1, luck: -0.1 },
+    healthyFood: { experience: 1, vitality: 0.3, energy: 0.2, intelligence: 0.1, confidence: 0.1 },
+    lowCalorieDiet: { experience: 1, vitality: 0.2, energy: 0.1, strength: -0.1, agility: 0.1, confidence: 0.1 },
+    highCalorieDiet: { experience: 1, vitality: 0.2, energy: 0.2, strength: 0.1, agility: -0.1 },
+    infusions: { experience: 1, vitality: 0.1, energy: 0.1, intelligence: 0.1, confidence: 0.1 },
+    pastries: { experience: 0, vitality: -0.1, energy: 0.1, agility: -0.1, confidence: -0.1 },
+    learnSkill: { experience: 2, energy: 0.1, intelligence: 0.3, confidence: 0.2 },
+    mentalExercise: { experience: 1, energy: 0.1, intelligence: 0.2, confidence: 0.1 },
+    programming: { experience: 1, intelligence: 0.3, luck: 0.1, confidence: 0.1 },
+    globalSolutions: { experience: 2, intelligence: 0.3, luck: 0.1, confidence: 0.2 },
+    organizeWeek: { experience: 1, energy: 0.1, intelligence: 0.2, confidence: 0.1 },
+    meetNewPerson: { experience: 1, luck: 0.1, confidence: 0.3 },
+    seeFriends: { experience: 1, vitality: 0.1, energy: 0.1, luck: 0.1, confidence: 0.2 },
+    sendMeme: { experience: 0, luck: 0.05, confidence: 0.1 },
+    talkFamily: { experience: 1, vitality: 0.1, energy: 0.1, luck: 0.1, confidence: 0.2 }
 };
 
 let activitiesDoneToday = {};
@@ -44,13 +53,9 @@ let lastActivityDate = {};
 
 function updateStatsDisplay() {
     for (const stat in stats) {
-        document.getElementById(stat).textContent = `${stat.charAt(0).toUpperCase() + stat.slice(1)}: ${Math.round(stats[stat])}`;
-    }
-}
-
-function updateActivityCounts() {
-    for (const activity in activityCounts) {
-        document.getElementById(`${activity}-count`).textContent = `${activity.charAt(0).toUpperCase() + activity.slice(1)}: ${activityCounts[activity]}`;
+        if (stat !== "experience") {
+            document.getElementById(stat).textContent = Math.round(stats[stat] * 100) / 100;
+        }
     }
 }
 
@@ -68,40 +73,55 @@ function performActivity(activity) {
     activitiesDoneToday[today].add(activity);
     lastActivityDate[activity] = today;
 
-    const effect = effects[activity];
+    const effect = baseEffects[activity];
+    stats.experience += effect.experience;
+
     for (const stat in effect) {
-        stats[stat] += effect[stat];
+        if (stat !== "experience") {
+            pendingStats[stat] += effect[stat];
+        }
     }
-    if (activityCounts.hasOwnProperty(activity)) {
-        activityCounts[activity]++;
-        updateActivityCounts();
-    }
+
+    checkLevelUp();
+
     updateStatsDisplay();
+}
+
+function checkLevelUp() {
+    let expNeeded = 20 * Math.pow(1.2, stats.level - 1);
+    while (stats.experience >= expNeeded) {
+        stats.experience -= expNeeded;
+        stats.level++;
+        expNeeded = 20 * Math.pow(1.2, stats.level - 1);
+
+        // Apply pending stats
+        for (const stat in pendingStats) {
+            stats[stat] += pendingStats[stat];
+            pendingStats[stat] = 0; // Reset pending stats after applying
+        }
+
+        alert("¡Has subido de nivel!");
+    }
 }
 
 function decrementDailyStats() {
     const today = new Date().toISOString().split('T')[0];
-    for (const activity in dailyDecrementEffects) {
+    for (const activity in baseEffects) {
         const lastDate = new Date(lastActivityDate[activity] || today);
         const daysSinceLastActivity = Math.floor((new Date(today) - lastDate) / (1000 * 60 * 60 * 24));
 
         if (daysSinceLastActivity >= 2) {
-            const effect = dailyDecrementEffects[activity];
+            const effect = baseEffects[activity];
             for (const stat in effect) {
-                stats[stat] += effect[stat]; // Apply negative effect
-                if (stats[stat] < 0) stats[stat] = 0;
+                if (stat !== "experience") {
+                    stats[stat] += dailyDecrementEffects[activity][stat] || 0; // Apply negative effect
+                    if (stats[stat] < 0) stats[stat] = 0;
+                }
             }
         }
     }
     updateStatsDisplay();
 }
 
-function increaseLevel() {
-    stats.level++;
-    updateStatsDisplay();
-}
-
 updateStatsDisplay();
-updateActivityCounts();
 setInterval(decrementDailyStats, 86400000); // Decrease daily stats every 24 hours
-setInterval(increaseLevel, 31536000000); // Increase level every 365 days
