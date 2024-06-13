@@ -124,7 +124,7 @@ function checkLevelUp() {
             pendingStats[stat] = 0; // Reset pending stats after applying
         }
 
-        // Add a special skill as an example
+        // Add the special skill "Resistencia Mental"
         specialSkills.push({
             name: 'Resistencia Mental',
             description: 'Esta habilidad fruto de un gran esfuerzo mental seguido para conseguir valores, principios y objetivos por parte del jugador le permiten tener un 15% más de resistencia a darse por vencido ante las adversidades del día a día. Esta habilidad se pierde si en 15 días no se ha realizado una tarea como gran objetivo.'
