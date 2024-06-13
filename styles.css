@@ -79,3 +79,12 @@ header {
 .activities button:hover {
     background-color: #008;
 }
+
+.special-skills-detail {
+    margin-top: 20px;
+    flex-grow: 1;
+    background-color: #444;
+    padding: 20px;
+    border-radius: 10px;
+    margin-left: 20px;
+}
