@@ -33,6 +33,13 @@ header {
     flex-shrink: 0;
 }
 
+.main-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-right: 20px;
+}
+
 .stats {
     margin-bottom: 20px;
 }
@@ -45,12 +52,10 @@ header {
 }
 
 .description {
-    margin-top: 20px;
     background-color: #444;
     padding: 20px;
     border-radius: 10px;
-    flex-grow: 1;
-    margin-right: 20px;
+    margin-bottom: 20px;
 }
 
 .stats table, .activities {
@@ -80,11 +85,6 @@ header {
     background-color: #008;
 }
 
-.special-skills-detail {
-    margin-top: 20px;
-    flex-grow: 1;
-    background-color: #444;
-    padding: 20px;
-    border-radius: 10px;
-    margin-left: 20px;
+.activities td span {
+    margin-left: 10px;
 }
