@@ -50,12 +50,36 @@ const baseEffects = {
 
 let activitiesDoneToday = {};
 let lastActivityDate = {};
+let specialSkills = [];
 
 function updateStatsDisplay() {
     for (const stat in stats) {
         if (stat !== "experience") {
             document.getElementById(stat).textContent = Math.round(stats[stat] * 100) / 100;
         }
+    }
+}
+
+function updateSpecialSkillsDisplay() {
+    const summaryList = document.getElementById('skills-summary');
+    const detailDiv = document.getElementById('skills-detail');
+
+    summaryList.innerHTML = '';
+    detailDiv.innerHTML = '';
+
+    if (specialSkills.length === 0) {
+        summaryList.innerHTML = 'Ninguna habilidad especial aún';
+    } else {
+        specialSkills.forEach(skill => {
+            const listItem = document.createElement('li');
+            listItem.textContent = skill.name;
+            summaryList.appendChild(listItem);
+
+            const skillDetailDiv = document.createElement('div');
+            skillDetailDiv.className = 'skill-detail';
+            skillDetailDiv.innerHTML = `<h4>${skill.name}</h4><p>${skill.description}</p>`;
+            detailDiv.appendChild(skillDetailDiv);
+        });
     }
 }
 
@@ -100,6 +124,14 @@ function checkLevelUp() {
             pendingStats[stat] = 0; // Reset pending stats after applying
         }
 
+        // Add a special skill as an example
+        specialSkills.push({
+            name: 'Resistencia Mental',
+            description: 'Esta habilidad fruto de un gran esfuerzo mental seguido para conseguir valores, principios y objetivos por parte del jugador le permiten tener un 15% más de resistencia a darse por vencido ante las adversidades del día a día. Esta habilidad se pierde si en 15 días no se ha realizado una tarea como gran objetivo.'
+        });
+
+        updateSpecialSkillsDisplay();
+
         alert("¡Has subido de nivel!");
     }
 }
@@ -124,4 +156,5 @@ function decrementDailyStats() {
 }
 
 updateStatsDisplay();
+updateSpecialSkillsDisplay();
 setInterval(decrementDailyStats, 86400000); // Decrease daily stats every 24 hours
