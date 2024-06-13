@@ -1,0 +1,9 @@
+title: Minijuego de Estadísticas
+description: >
+  Un minijuego para gestionar y mejorar estadísticas personales.
+baseurl: ""
+url: "https://{your-username}.github.io/{your-repo}"
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed
