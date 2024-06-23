@@ -21,7 +21,7 @@ const pendingStats = {
 };
 
 const dailyDecrementEffects = {
-    running: { vitality: -0.1, energy: -0.1, strength: -0.05, agility: -0.1, luck: -0.05, confidence: -0.1 },
+    running: { experience: 5 , vitality: -0.1, energy: -0.1, strength: -0.05, agility: -0.1, luck: -0.05, confidence: -0.1 },
     reading: { energy: -0.05, intelligence: -0.1, confidence: -0.05 },
     sleeping: { vitality: -0.1, energy: -0.1 },
     meditating: { intelligence: -0.1, energy: -0.05, confidence: -0.05 },
